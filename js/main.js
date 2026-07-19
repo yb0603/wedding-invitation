@@ -16,7 +16,10 @@
 
   var WEDDING_DATETIME = new Date("2026-12-13T12:30:00+09:00");
   var VENUE_QUERY = "성균관컨벤션웨딩홀";
-  var VENUE_LAT = 37.5886; // 성균관컨벤션웨딩홀 대략 위치 (혜화역 인근)
+  var VENUE_ADDRESS = "서울 종로구 성균관로 31";
+  // 아래 두 값은 카카오맵 지오코더가 실패할 때만 쓰는 대략적인 폴백 좌표.
+  // 정확한 위치는 initKakaoMap()에서 VENUE_ADDRESS를 실시간으로 지오코딩해서 구함.
+  var VENUE_LAT = 37.5886;
   var VENUE_LNG = 126.9985;
 
   var GALLERY_IMAGES = [
@@ -282,7 +285,27 @@
   }
 
   // ---------------------------------------------------------
+  // TMAP 길찾기 링크에 좌표를 반영 (초기엔 대략 좌표, 지오코딩 성공 시 정확한 좌표로 갱신)
+  // (tmap://search?name= 는 TMap이 지원하지 않는 액션이라 열리지 않음.
+  //  공식적으로 확인된 형식은 tmap://route?rGoName=&rGoX=&rGoY= 이다.)
+  // ---------------------------------------------------------
+  function updateTmapLink(lat, lng) {
+    var link = document.getElementById("tmap-link");
+    if (!link) return;
+    link.href =
+      "tmap://route?rGoName=" + encodeURIComponent(VENUE_QUERY) +
+      "&rGoX=" + lng +
+      "&rGoY=" + lat;
+  }
+
+  function initTmapLink() {
+    updateTmapLink(VENUE_LAT, VENUE_LNG);
+  }
+
+  // ---------------------------------------------------------
   // 카카오맵
+  // VENUE_ADDRESS를 카카오 지오코더로 실시간 변환해서 정확한 좌표에 지도를 찍는다.
+  // (좌표를 수동으로 하드코딩하면 부정확할 수 있어, 주소 → 좌표 변환을 직접 한다.)
   // ---------------------------------------------------------
   function initKakaoMap() {
     var mapEl = document.getElementById("kakao-map");
@@ -293,35 +316,31 @@
     script.src =
       "https://dapi.kakao.com/v2/maps/sdk.js?appkey=" +
       KAKAO_MAP_APP_KEY +
-      "&autoload=false";
+      "&autoload=false&libraries=services";
     script.onload = function () {
       kakao.maps.load(function () {
-        var map = new kakao.maps.Map(mapEl, {
-          center: new kakao.maps.LatLng(VENUE_LAT, VENUE_LNG),
-          level: 3
+        function renderMap(lat, lng) {
+          var center = new kakao.maps.LatLng(lat, lng);
+          var map = new kakao.maps.Map(mapEl, { center: center, level: 3 });
+          var marker = new kakao.maps.Marker({ position: center });
+          marker.setMap(map);
+        }
+
+        var geocoder = new kakao.maps.services.Geocoder();
+        geocoder.addressSearch(VENUE_ADDRESS, function (result, status) {
+          if (status === kakao.maps.services.Status.OK && result[0]) {
+            var lat = parseFloat(result[0].y);
+            var lng = parseFloat(result[0].x);
+            renderMap(lat, lng);
+            updateTmapLink(lat, lng); // TMap 링크도 정확한 좌표로 갱신
+          } else {
+            // 지오코딩 실패 시에만 대략 좌표로 대체
+            renderMap(VENUE_LAT, VENUE_LNG);
+          }
         });
-        var marker = new kakao.maps.Marker({
-          position: new kakao.maps.LatLng(VENUE_LAT, VENUE_LNG)
-        });
-        marker.setMap(map);
       });
     };
     document.head.appendChild(script);
-  }
-
-  // ---------------------------------------------------------
-  // TMAP 길찾기 링크
-  // (tmap://search?name= 는 TMap이 지원하지 않는 액션이라 열리지 않음.
-  //  공식적으로 확인된 형식은 tmap://route?rGoName=&rGoX=&rGoY= 이며,
-  //  목적지 좌표가 필요하므로 위의 VENUE_LAT/VENUE_LNG를 사용한다.)
-  // ---------------------------------------------------------
-  function initTmapLink() {
-    var link = document.getElementById("tmap-link");
-    if (!link) return;
-    link.href =
-      "tmap://route?rGoName=" + encodeURIComponent(VENUE_QUERY) +
-      "&rGoX=" + VENUE_LNG +
-      "&rGoY=" + VENUE_LAT;
   }
 
   // ---------------------------------------------------------
