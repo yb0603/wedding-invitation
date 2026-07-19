@@ -9,10 +9,10 @@
   // ---------------------------------------------------------
   // Google Apps Script 웹앱 배포 후 발급되는 URL을 여기에 넣으세요.
   // (설정 방법: js/rsvp-apps-script.gs 및 함께 제공된 배포 안내 참고)
-  var APPS_SCRIPT_URL = ""; // 예: "https://script.google.com/macros/s/xxxx/exec"
+  var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwFWD4Lz7bj4tGj_k3DpmSyFLiVaY67thazsoVjSiWlr6o2jbPfi73rqJWJ2oZs0zOzbg/exec"; // 예: "https://script.google.com/macros/s/xxxx/exec"
 
   // 카카오 디벨로퍼스에서 발급받은 JavaScript 키를 여기에 넣으면 지도가 표시됩니다.
-  var KAKAO_MAP_APP_KEY = ""; // 예: "1234567890abcdef1234567890abcdef"
+  var KAKAO_MAP_APP_KEY = "78c51aaa6f628b3714df8311bcef1547"; // 예: "1234567890abcdef1234567890abcdef"
 
   var WEDDING_DATETIME = new Date("2026-12-13T12:30:00+09:00");
   var VENUE_QUERY = "성균관컨벤션웨딩홀";
