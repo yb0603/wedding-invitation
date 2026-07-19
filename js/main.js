@@ -23,14 +23,20 @@
   var VENUE_LNG = 126.9985;
 
   var GALLERY_IMAGES = [
-    "KUHO8511.jpg", "KUHO8645.jpg", "KUHO8948.jpg", "DYL_9893.jpg",
-    "KUHO9004.jpg", "KUHO9022.jpg", "KUHO9110.jpg", "KUHO9197.jpg",
-    "KUHO9241.jpg", "DYL_0100.jpg", "KUHO9318.jpg", "KUHO9515.jpg",
-    "KUHO9606.jpg", "KUHO9710.jpg", "DYL_0147.jpg", "KUHO9768.jpg",
-    "KUHO9773.jpg", "KUHO9782.jpg", "KUHO9889.jpg", "DYL_0187.jpg",
-    "KUHO9921.jpg", "KUHO9985.jpg", "KUHO9999.jpg", "KUHO0121.jpg",
-    "KUHO0136.jpg", "KUHO0166.jpg", "KUHO0203.jpg", "KUHO0259.jpg",
-    "KUHO0269.jpg", "KUHO0295.jpg"
+    "KakaoTalk_20260720_000742513.jpg", "KUHO9022.jpg",
+    "KakaoTalk_20260720_000742513_01.jpg", "KakaoTalk_20260720_004226111.jpg",
+    "KakaoTalk_20260720_000742513_07.jpg", "KUHO9710.jpg",
+    "KakaoTalk_20260720_000742513_03.jpg", "KakaoTalk_20260720_000742513_10.jpg",
+    "KakaoTalk_20260720_000742513_13.jpg", "DYL_0100.jpg",
+    "KakaoTalk_20260720_000742513_16.jpg", "KakaoTalk_20260720_000742513_05.jpg",
+    "KakaoTalk_20260720_000742513_08.jpg", "KakaoTalk_20260720_004226111_02.jpg",
+    "KakaoTalk_20260720_000742513_02.jpg", "KUHO9889.jpg",
+    "KakaoTalk_20260720_000742513_11.jpg", "KakaoTalk_20260720_000742513_09.jpg",
+    "KakaoTalk_20260720_000742513_14.jpg", "KakaoTalk_20260720_004226111_03.jpg",
+    "KakaoTalk_20260720_000742513_06.jpg", "KakaoTalk_20260720_000742513_17.jpg",
+    "KakaoTalk_20260720_000742513_12.jpg", "KakaoTalk_20260720_000742513_04.jpg",
+    "KakaoTalk_20260720_000742513_15.jpg", "KakaoTalk_20260720_004336091.jpg",
+    "KakaoTalk_20260720_000742513_18.jpg", "KakaoTalk_20260720_000742513_19.jpg"
   ];
 
   document.addEventListener("DOMContentLoaded", function () {
