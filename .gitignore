@@ -1,0 +1,10 @@
+# 원본 사진(용량이 커서 저장소에는 포함하지 않음, 웹용 압축본은 assets/img/에 커밋됨)
+/Photo/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+
+# python
+__pycache__/
+*.pyc

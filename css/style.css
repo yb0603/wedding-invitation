@@ -1,0 +1,851 @@
+/* =========================================================
+   김유빈 · 박지인 모바일 청첩장
+   화이트 톤 + 그린 계열 포인트, 세련되고 깔끔한 스타일
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap');
+
+:root{
+  --paper: #ffffff;
+  --paper-deep: #f5f8f6;
+  --paper-line: rgba(20,30,25,.10);
+  --line: #dfe5e1;
+  --ink: #21261f;
+  --ink-soft: #565f57;
+  --ink-faint: #8b9289;
+  --accent: #1f6b4c;       /* 메인 그린 포인트 */
+  --accent-soft: #5c9c7c;  /* 밝은 그린 (보조 강조) */
+  --green: #3a7a5c;        /* 보조 그린 (라벨/태그) */
+  --white: #ffffff;
+  --shadow: 0 18px 40px rgba(20,30,25,.10);
+  --max-w: 480px;
+  font-size: 16px;
+}
+
+*{ box-sizing: border-box; }
+html,body{ margin:0; padding:0; max-width: 100%; overflow-x: hidden; }
+body{
+  background: var(--ink);
+  color: var(--ink);
+  font-family: "Noto Serif KR", serif;
+  font-weight: 400;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  width: 100%;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+img{ max-width:100%; display:block; }
+a{ color: inherit; text-decoration: none; }
+button{ font-family: inherit; cursor:pointer; }
+h1,h2,h3,p{ margin:0; }
+
+.page{
+  width: 100%;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  background: var(--paper);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ---------- shared layout ---------- */
+.section{
+  position: relative;
+  padding: 72px 28px;
+  text-align: center;
+  border-bottom: 1px solid var(--paper-line);
+}
+.section--tight{ padding: 56px 28px; }
+.section--dark{
+  background: var(--ink);
+  color: var(--paper);
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-weight: 600;
+  letter-spacing: .35em;
+  font-size: .7rem;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.eyebrow::before,
+.eyebrow::after{
+  content:"";
+  width: 18px;
+  height: 1px;
+  background: var(--line);
+}
+.section-title{
+  font-family: "Noto Serif KR", serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  letter-spacing: .04em;
+  margin-bottom: 8px;
+}
+.section-sub{
+  font-size: .85rem;
+  color: var(--ink-faint);
+  letter-spacing: .06em;
+  margin-bottom: 36px;
+}
+
+/* reveal-on-scroll */
+.reveal{
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+.reveal.is-visible{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================================
+   1. COVER
+   ========================================================= */
+.cover{
+  position: relative;
+  min-height: 100svh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content: flex-end;
+  padding: 0 0 64px;
+  color: var(--white);
+  text-align:center;
+  overflow:hidden;
+}
+.cover__img{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit: cover;
+  filter: saturate(.95);
+}
+.cover__scrim{
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(10,15,12,.05) 0%, rgba(10,15,12,.1) 45%, rgba(10,15,12,.72) 100%);
+}
+.cover__content{
+  position: relative;
+  z-index: 2;
+  padding: 0 24px;
+}
+.cover__kicker{
+  font-weight: 500;
+  letter-spacing: .5em;
+  font-size: .7rem;
+  opacity: .85;
+  margin-bottom: 18px;
+}
+.cover__title{
+  font-family: "Noto Serif KR", serif;
+  font-weight: 600;
+  font-size: clamp(1.55rem, 6.8vw, 2.15rem);
+  line-height: 1.55;
+  margin-bottom: 22px;
+  text-shadow: 0 2px 18px rgba(0,0,0,.25);
+}
+.cover__names{
+  font-size: 1.05rem;
+  letter-spacing: .06em;
+  margin-bottom: 10px;
+}
+.cover__date{
+  font-size: .8rem;
+  letter-spacing: .18em;
+  opacity: .9;
+}
+.cover__scroll{
+  position: absolute;
+  bottom: 22px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 1px; height: 40px;
+  background: linear-gradient(180deg, transparent, rgba(255,255,255,.8));
+}
+
+/* =========================================================
+   2. INVITATION TEXT
+   ========================================================= */
+.invite p{
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.3em;
+}
+.invite .highlight{
+  color: var(--accent);
+}
+.invite__names{
+  margin-top: 34px;
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+.invite__line{
+  font-size: .88rem;
+  color: var(--ink-soft);
+}
+.invite__name{
+  font-family: "Noto Serif KR", serif;
+  font-size: 1.12rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: .03em;
+  margin-left: 2px;
+}
+
+/* =========================================================
+   3. CALENDAR / D-DAY
+   ========================================================= */
+.calendar-card{
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 28px 20px 24px;
+  position: relative;
+}
+
+.dday-card{
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 26px 20px 22px;
+  margin-top: 14px;
+}
+
+.calendar-leaf-single{
+  width: 20px;
+  height: 20px;
+  margin: 0 auto 10px;
+  color: var(--accent-soft);
+  opacity: .8;
+}
+
+.calendar-month{
+  font-family:"Noto Serif KR", serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.calendar-grid{
+  display:grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px 2px;
+}
+.calendar-grid .dow{
+  font-size: .68rem;
+  color: var(--ink-faint);
+  padding-bottom: 8px;
+  letter-spacing: .05em;
+}
+.calendar-grid .dow--sun{ color: var(--accent-soft); }
+.calendar-grid .day{
+  position: relative;
+  aspect-ratio: 1/1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: .82rem;
+  color: var(--ink-soft);
+}
+.calendar-grid .day.is-blank{ visibility:hidden; }
+.calendar-grid .day.is-sun{ color: var(--accent-soft); }
+.calendar-grid .day.is-the-day{
+  color: var(--white);
+  font-weight:600;
+}
+.calendar-grid .day.is-the-day .stamp{
+  position:absolute; inset: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.calendar-grid .day.is-the-day span{ position:relative; z-index:1; }
+
+.dday{
+  margin-top: 0;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 10px;
+}
+.dday__label{
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--green);
+  letter-spacing: .1em;
+}
+.dday__units{
+  display:flex;
+  align-items:baseline;
+  justify-content:center;
+  gap: 5px;
+}
+.dday__unit{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 2px;
+  min-width: 34px;
+}
+.dday__unit small{
+  font-size: .58rem;
+  color: var(--ink-faint);
+  letter-spacing: .05em;
+}
+.dday__sep{
+  color: var(--ink-faint);
+  font-size: 1.1rem;
+  padding-bottom: 12px;
+}
+.dday__num{
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.calendar-venue{
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: .88rem;
+  letter-spacing: .04em;
+  color: var(--ink);
+}
+.calendar-venue b{ color: var(--accent); }
+
+/* =========================================================
+   4. FAMILY / CONTACT
+   ========================================================= */
+.family-block{
+  display:flex;
+  flex-direction:column;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+.family-person{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 10px;
+}
+.family-parents{
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: .03em;
+}
+.family-role-line{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+}
+.family-role-line .role{
+  font-family:"Noto Serif KR", serif;
+  color: var(--accent);
+  font-size: 1rem;
+}
+.family-role-line .name{
+  font-weight:600;
+  color: var(--ink);
+  font-size: 1.15rem;
+  letter-spacing: .04em;
+}
+.family-divider{
+  width: 60px;
+  height: 1px;
+  background: var(--line);
+  margin: 0 auto;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 8px;
+  padding: 13px 26px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: .85rem;
+  letter-spacing: .08em;
+  color: var(--ink);
+  background: transparent;
+  transition: background .25s ease, color .25s ease;
+}
+.btn:hover{ background: var(--ink); color: var(--paper); }
+.btn--solid{
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
+}
+.btn--solid:hover{ background: #164f38; }
+
+/* modal */
+.modal-overlay{
+  position: fixed; inset:0;
+  background: rgba(10,15,12,.5);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 24px;
+  z-index: 100;
+  opacity:0;
+  pointer-events:none;
+  transition: opacity .25s ease;
+}
+.modal-overlay.is-open{ opacity:1; pointer-events:auto; }
+.modal{
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  max-width: 360px;
+  width:100%;
+  padding: 30px 24px;
+  text-align:center;
+  transform: translateY(12px);
+  transition: transform .25s ease;
+}
+.modal-overlay.is-open .modal{ transform: translateY(0); }
+.modal--form{
+  max-height: 88vh;
+  overflow-y: auto;
+}
+.modal h3{
+  font-family:"Noto Serif KR", serif;
+  font-weight: 600;
+  font-size: 1.15rem;
+  margin-bottom: 18px;
+  color: var(--ink);
+}
+.contact-list{ display:flex; flex-direction:column; gap: 14px; margin-bottom: 20px; }
+.contact-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 10px 14px;
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-line);
+  border-radius: 8px;
+  font-size: .88rem;
+}
+.contact-item .who{ color: var(--ink-soft); }
+.contact-item .actions{ display:flex; gap: 8px; }
+.contact-item .actions a{
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display:flex; align-items:center; justify-content:center;
+  background: var(--paper);
+  font-size: .8rem;
+}
+.modal-close{
+  font-size: .8rem;
+  color: var(--ink-faint);
+  letter-spacing: .08em;
+  border-top: 1px solid var(--ink);
+  padding-top: 14px;
+  width:100%;
+}
+
+/* =========================================================
+   5. HISTORY (timeline)
+   ========================================================= */
+.origin-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 12px;
+}
+.origin-card{
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-line);
+  border-radius: 8px;
+  padding: 16px 12px 18px;
+  text-align:center;
+}
+.origin-card__photo{
+  width: 84px; height: 84px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  overflow:hidden;
+  border: 3px solid var(--paper);
+  box-shadow: 0 6px 14px rgba(20,30,25,.1);
+}
+.origin-card__photo img{ width:100%; height:100%; object-fit:cover; }
+.origin-card__role{
+  font-family:"Noto Serif KR", serif;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: .8rem;
+  margin-bottom: 4px;
+}
+.origin-card__name{
+  font-weight: 600;
+  font-size: .98rem;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.origin-card__desc{
+  font-size: .78rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.timeline{
+  text-align: left;
+}
+.timeline__item{
+  display:flex;
+  gap: 16px;
+}
+.timeline__marker{
+  flex: none;
+  width: 9px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.timeline__dot{
+  flex: none;
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 6px;
+}
+.timeline__line{
+  flex: 1;
+  width: 1px;
+  background: var(--line);
+  margin-top: 6px;
+}
+.timeline__item:last-child .timeline__line{ display:none; }
+.timeline__content{
+  flex: 1;
+  min-width: 0;
+  padding-bottom: 38px;
+}
+.timeline__date{
+  font-family: "Noto Serif KR", serif;
+  font-weight: 600;
+  font-size: .92rem;
+  color: var(--accent);
+  letter-spacing: .03em;
+  margin-bottom: 12px;
+}
+.timeline__media{
+  margin-bottom: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--paper-deep);
+}
+.timeline__media img{
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  display:block;
+}
+.timeline__media--pair{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.timeline__media-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.timeline__media-grid img{
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display:block;
+}
+.timeline__caption{
+  font-size: .88rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.timeline__caption-sub{
+  color: var(--ink-faint);
+  font-size: .8rem;
+}
+
+/* =========================================================
+   6. GALLERY
+   ========================================================= */
+.carousel{
+  position: relative;
+  width: 100%;
+}
+.carousel__viewport{
+  width: 100%;
+  aspect-ratio: 2/3;
+  max-height: 64vh;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--paper-deep);
+  border: 1px solid var(--paper-line);
+  touch-action: pan-y;
+}
+.carousel__img{
+  width:100%; height:100%;
+  object-fit: cover;
+  transition: opacity .3s ease;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+.carousel__img.is-fading{ opacity: 0; }
+.carousel__nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.9);
+  color: var(--ink);
+  font-size: 1.3rem;
+  line-height: 1;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 4px 10px rgba(20,30,25,.15);
+  z-index: 2;
+}
+.carousel__nav--prev{ left: 10px; }
+.carousel__nav--next{ right: 10px; }
+.carousel__counter{
+  margin-top: 14px;
+  text-align:center;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  color: var(--ink-faint);
+}
+
+/* =========================================================
+   7. LOCATION
+   ========================================================= */
+.venue-name{
+  font-family:"Noto Serif KR", serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.venue-addr{
+  font-size: .85rem;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+}
+.venue-tel{
+  font-size: .8rem;
+  color: var(--ink-faint);
+  margin-bottom: 22px;
+}
+.map-frame{
+  width:100%;
+  height: 220px;
+  border: 1px solid var(--paper-line);
+  border-radius: 10px;
+  overflow:hidden;
+  margin-bottom: 16px;
+  background: var(--paper-deep);
+}
+.map-frame iframe,
+.map-frame img{ width:100%; height:100%; object-fit:cover; border:0; }
+.map-frame .map-fallback{
+  width:100%; height:100%;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:8px;
+  color: var(--ink-faint);
+  font-size: .78rem;
+  text-align:center;
+  padding: 0 20px;
+}
+
+.map-btns{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 34px;
+}
+.map-btns a{
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  padding: 12px 4px;
+  border: 1px solid var(--paper-line);
+  border-radius: 8px;
+  font-size: .7rem;
+  color: var(--ink-soft);
+  background: var(--paper);
+}
+.map-btns .ico{
+  width: 26px; height:26px;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size: .8rem;
+  color: var(--white);
+}
+
+.transit-info{
+  text-align:left;
+  background: var(--paper);
+  border: 1px solid var(--paper-line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.transit-info__item{
+  display:flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 18px 18px;
+}
+.transit-info__item + .transit-info__item{
+  border-top: 1px solid var(--line);
+}
+.transit-info__label{
+  flex: none;
+  width: 40px;
+  font-family:"Noto Serif KR", serif;
+  font-weight: 600;
+  color: var(--green);
+  font-size: .84rem;
+  letter-spacing: .04em;
+  padding-top: 2px;
+}
+.transit-info__item p{
+  font-size: .82rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+/* =========================================================
+   8. GIFT
+   ========================================================= */
+.gift-text{
+  font-size: .92rem;
+  color: var(--ink-soft);
+  margin-bottom: 30px;
+}
+.account-toggle{ display:flex; flex-direction:column; gap:10px; }
+.account-group{
+  border: 1px solid var(--paper-line);
+  border-radius: 8px;
+  overflow:hidden;
+  background: var(--paper);
+  text-align:left;
+}
+.account-group summary{
+  padding: 14px 16px;
+  font-size: .88rem;
+  color: var(--ink);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  list-style:none;
+  cursor:pointer;
+}
+.account-group summary::-webkit-details-marker{ display:none; }
+.account-group summary::after{ content:"+"; color: var(--ink-faint); }
+.account-group[open] summary::after{ content:"–"; }
+.account-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding: 10px 16px 16px;
+  font-size: .82rem;
+  color: var(--ink-faint);
+  border-top: 1px solid var(--line);
+}
+
+/* =========================================================
+   9. RSVP
+   ========================================================= */
+.rsvp-form{ text-align:left; display:flex; flex-direction:column; gap: 16px; }
+.field label{
+  display:block;
+  font-size: .78rem;
+  color: var(--ink-faint);
+  margin-bottom: 6px;
+  letter-spacing: .04em;
+}
+.field input[type="text"],
+.field input[type="tel"],
+.field input[type="number"]{
+  width:100%;
+  padding: 12px 14px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  background: var(--paper);
+  font-family: inherit;
+  font-size: .9rem;
+  color: var(--ink);
+}
+.radio-row{ display:flex; gap: 10px; }
+.radio-row label{
+  flex:1;
+  display:flex; align-items:center; justify-content:center;
+  padding: 12px;
+  border: 1px solid var(--paper-line);
+  border-radius: 6px;
+  font-size: .85rem;
+  color: var(--ink-soft);
+  background: var(--paper);
+}
+.radio-row input{ display:none; }
+.radio-row input:checked + span{ color: var(--white); }
+.radio-row label:has(input:checked){
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
+}
+.rsvp-submit{ margin-top: 4px; width:100%; }
+.rsvp-msg{
+  font-size: .8rem;
+  text-align:center;
+  margin-top: 10px;
+  min-height: 1.2em;
+  color: var(--green);
+}
+.rsvp-msg.is-error{ color: #b3453f; }
+
+/* =========================================================
+   10. RECEPTION
+   ========================================================= */
+.notice-box{
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 26px 18px;
+  color: var(--ink-faint);
+  font-size: .85rem;
+  letter-spacing: .04em;
+}
+
+/* footer */
+.footer{
+  padding: 40px 28px 56px;
+  text-align:center;
+  background: var(--ink);
+  color: rgba(255,255,255,.55);
+  font-size: .74rem;
+  letter-spacing: .08em;
+}
+.footer .mark{
+  font-family:"Noto Serif KR", serif;
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--paper);
+  margin-bottom: 10px;
+}
+
+@media (min-width: 540px){
+  body{ padding: 40px 0; }
+}
