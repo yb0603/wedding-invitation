@@ -93,6 +93,10 @@ h1,h2,h3,p{ margin:0; }
   letter-spacing: .06em;
   margin-bottom: 36px;
 }
+.section-sub__strong{
+  color: var(--ink);
+  font-weight: 700;
+}
 
 /* reveal-on-scroll */
 .reveal{
@@ -630,6 +634,72 @@ h1,h2,h3,p{ margin:0; }
   letter-spacing: .08em;
   color: var(--ink-faint);
 }
+.carousel__viewport{ cursor: zoom-in; }
+
+/* 갤러리 확대 라이트박스 */
+.lightbox{
+  position: fixed; inset: 0;
+  background: rgba(8,12,10,.96);
+  display:flex; align-items:center; justify-content:center;
+  z-index: 300;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+}
+.lightbox.is-open{ opacity: 1; pointer-events: auto; }
+.lightbox__viewport{
+  width: 100%;
+  height: 100%;
+  display:flex; align-items:center; justify-content:center;
+  padding: 64px 20px;
+  touch-action: pan-y;
+}
+.lightbox__img{
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: opacity .2s ease;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+.lightbox__img.is-fading{ opacity: 0; }
+.lightbox__close{
+  position: absolute;
+  top: 18px; right: 18px;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  display:flex; align-items:center; justify-content:center;
+  z-index: 2;
+}
+.lightbox__nav{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,.14);
+  color: #fff;
+  font-size: 1.6rem;
+  line-height: 1;
+  display:flex; align-items:center; justify-content:center;
+  z-index: 2;
+}
+.lightbox__nav--prev{ left: 10px; }
+.lightbox__nav--next{ right: 10px; }
+.lightbox__counter{
+  position: absolute;
+  bottom: 20px; left: 0; right: 0;
+  text-align: center;
+  font-size: .78rem;
+  letter-spacing: .08em;
+  color: rgba(255,255,255,.6);
+}
 
 /* =========================================================
    7. LOCATION
@@ -704,27 +774,29 @@ h1,h2,h3,p{ margin:0; }
 }
 .transit-info__item{
   display:flex;
-  gap: 18px;
+  gap: 14px;
   align-items: flex-start;
-  padding: 18px 18px;
+  padding: 16px 16px;
 }
 .transit-info__item + .transit-info__item{
   border-top: 1px solid var(--line);
 }
 .transit-info__label{
   flex: none;
-  width: 40px;
+  white-space: nowrap;
   font-family:"Noto Serif KR", serif;
   font-weight: 600;
   color: var(--green);
-  font-size: .84rem;
-  letter-spacing: .04em;
+  font-size: .8rem;
   padding-top: 2px;
 }
 .transit-info__item p{
-  font-size: .82rem;
+  flex: 1;
+  min-width: 0;
+  font-size: .8rem;
   color: var(--ink-soft);
   line-height: 1.7;
+  word-break: keep-all;
 }
 
 /* =========================================================
@@ -831,9 +903,9 @@ h1,h2,h3,p{ margin:0; }
 
 /* footer */
 .footer{
-  padding: 40px 28px 56px;
+  padding: 40px 28px 32px;
   text-align:center;
-  background: var(--ink);
+  background: #0b2318;
   color: rgba(255,255,255,.55);
   font-size: .74rem;
   letter-spacing: .08em;
@@ -844,6 +916,14 @@ h1,h2,h3,p{ margin:0; }
   font-size: .95rem;
   color: var(--paper);
   margin-bottom: 10px;
+}
+.footer__credit{
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,.12);
+  font-size: .68rem;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.35);
 }
 
 @media (min-width: 540px){

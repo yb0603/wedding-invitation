@@ -173,7 +173,7 @@
   }
 
   // ---------------------------------------------------------
-  // 갤러리 캐러셀 (화살표 버튼 + 모바일 스와이프)
+  // 갤러리 캐러셀 (화살표 버튼 + 모바일 스와이프) + 확대 라이트박스
   // ---------------------------------------------------------
   function initCarousel() {
     var viewport = document.getElementById("carousel-viewport");
@@ -184,9 +184,19 @@
     var totalEl = document.getElementById("carousel-total");
     if (!viewport || !img) return;
 
+    var lightbox = document.getElementById("gallery-lightbox");
+    var lightboxImg = document.getElementById("lightbox-img");
+    var lightboxIndexEl = document.getElementById("lightbox-index");
+    var lightboxTotalEl = document.getElementById("lightbox-total");
+    var lightboxClose = document.getElementById("lightbox-close");
+    var lightboxPrev = document.getElementById("lightbox-prev");
+    var lightboxNext = document.getElementById("lightbox-next");
+    var lightboxViewport = document.getElementById("lightbox-viewport");
+
     var total = GALLERY_IMAGES.length;
     var current = 0;
     totalEl.textContent = total;
+    if (lightboxTotalEl) lightboxTotalEl.textContent = total;
 
     function preload(idx) {
       var i = (idx + total) % total;
@@ -196,16 +206,28 @@
 
     function render(idx, animate) {
       current = (idx + total) % total;
+      var src = "assets/img/" + GALLERY_IMAGES[current];
       indexEl.textContent = current + 1;
+
       if (animate === false) {
-        img.src = "assets/img/" + GALLERY_IMAGES[current];
-        return;
+        img.src = src;
+      } else {
+        img.classList.add("is-fading");
+        setTimeout(function () {
+          img.src = src;
+          img.classList.remove("is-fading");
+        }, 150);
       }
-      img.classList.add("is-fading");
-      setTimeout(function () {
-        img.src = "assets/img/" + GALLERY_IMAGES[current];
-        img.classList.remove("is-fading");
-      }, 150);
+
+      if (lightboxImg && lightbox.classList.contains("is-open")) {
+        lightboxIndexEl.textContent = current + 1;
+        lightboxImg.classList.add("is-fading");
+        setTimeout(function () {
+          lightboxImg.src = src;
+          lightboxImg.classList.remove("is-fading");
+        }, 150);
+      }
+
       preload(current + 1);
       preload(current - 1);
     }
@@ -217,22 +239,46 @@
     prevBtn.addEventListener("click", function () { render(current - 1); });
     nextBtn.addEventListener("click", function () { render(current + 1); });
 
-    // 모바일 스와이프
-    var startX = 0, startY = 0, tracking = false;
-    viewport.addEventListener("touchstart", function (e) {
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
-      tracking = true;
-    }, { passive: true });
-    viewport.addEventListener("touchend", function (e) {
-      if (!tracking) return;
-      tracking = false;
-      var dx = e.changedTouches[0].clientX - startX;
-      var dy = e.changedTouches[0].clientY - startY;
-      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) render(current + 1); else render(current - 1);
-      }
-    }, { passive: true });
+    function bindSwipe(el, onPrev, onNext) {
+      var startX = 0, startY = 0, tracking = false;
+      el.addEventListener("touchstart", function (e) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        tracking = true;
+      }, { passive: true });
+      el.addEventListener("touchend", function (e) {
+        if (!tracking) return;
+        tracking = false;
+        var dx = e.changedTouches[0].clientX - startX;
+        var dy = e.changedTouches[0].clientY - startY;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+          if (dx < 0) onNext(); else onPrev();
+        }
+      }, { passive: true });
+    }
+
+    bindSwipe(viewport, function () { render(current - 1); }, function () { render(current + 1); });
+
+    // 확대 라이트박스
+    if (!lightbox) return;
+
+    function openLightbox() {
+      lightboxImg.src = "assets/img/" + GALLERY_IMAGES[current];
+      lightboxIndexEl.textContent = current + 1;
+      lightbox.classList.add("is-open");
+    }
+    function closeLightbox() {
+      lightbox.classList.remove("is-open");
+    }
+
+    viewport.addEventListener("click", openLightbox);
+    lightboxClose.addEventListener("click", closeLightbox);
+    lightboxPrev.addEventListener("click", function () { render(current - 1); });
+    lightboxNext.addEventListener("click", function () { render(current + 1); });
+    lightbox.addEventListener("click", function (e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+    bindSwipe(lightboxViewport, function () { render(current - 1); }, function () { render(current + 1); });
   }
 
   // ---------------------------------------------------------

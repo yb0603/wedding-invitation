@@ -56,7 +56,7 @@
   <section class="section section--tight">
     <p class="eyebrow">WEDDING DAY</p>
     <h2 class="section-title">예식 안내</h2>
-    <p class="section-sub">2026년 12월 13일 일요일 낮 12시 30분</p>
+    <p class="section-sub">2026년 12월 13일 일요일 <span class="section-sub__strong">낮 12시 30분</span></p>
 
     <div class="reveal">
       <div class="calendar-card">
@@ -286,6 +286,17 @@
     </div>
   </section>
 
+  <!-- 갤러리 확대 라이트박스 -->
+  <div class="lightbox" id="gallery-lightbox">
+    <button class="lightbox__close" id="lightbox-close" aria-label="닫기">&times;</button>
+    <button class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" aria-label="이전 사진">&#8249;</button>
+    <div class="lightbox__viewport" id="lightbox-viewport">
+      <img class="lightbox__img" id="lightbox-img" src="" alt="김유빈 박지인 웨딩 갤러리 확대">
+    </div>
+    <button class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="다음 사진">&#8250;</button>
+    <p class="lightbox__counter"><span id="lightbox-index">1</span> / <span id="lightbox-total">1</span></p>
+  </div>
+
   <!-- ============ 7. LOCATION ============ -->
   <section class="section section--tight">
     <p class="eyebrow">LOCATION</p>
@@ -425,6 +436,7 @@
   <footer class="footer">
     <p class="mark">김유빈 · 박지인</p>
     <p>2026. 12. 13 SUN · 성균관컨벤션웨딩홀</p>
+    <p class="footer__credit">Made by 김유빈 with claude</p>
   </footer>
 
 </div>
