@@ -224,6 +224,7 @@
 
       if (lightboxImg && lightbox.classList.contains("is-open")) {
         lightboxIndexEl.textContent = current + 1;
+        resetZoom();
         lightboxImg.classList.add("is-fading");
         setTimeout(function () {
           lightboxImg.src = src;
@@ -265,13 +266,38 @@
     // 확대 라이트박스
     if (!lightbox) return;
 
+    // 핀치 줌 / 팬 상태
+    var MIN_ZOOM = 1, MAX_ZOOM = 4;
+    var zoomScale = 1, zoomX = 0, zoomY = 0;
+
+    function applyZoom() {
+      lightboxImg.style.transform =
+        "translate(" + zoomX + "px, " + zoomY + "px) scale(" + zoomScale + ")";
+    }
+    function resetZoom() {
+      zoomScale = 1; zoomX = 0; zoomY = 0;
+      lightboxImg.style.transform = "";
+    }
+    function clampPan() {
+      var maxOffset = Math.max(0, (zoomScale - 1) * 160);
+      zoomX = Math.max(-maxOffset, Math.min(maxOffset, zoomX));
+      zoomY = Math.max(-maxOffset, Math.min(maxOffset, zoomY));
+    }
+    function touchDistance(t1, t2) {
+      var dx = t1.clientX - t2.clientX;
+      var dy = t1.clientY - t2.clientY;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+
     function openLightbox() {
       lightboxImg.src = "assets/img/" + GALLERY_IMAGES[current];
       lightboxIndexEl.textContent = current + 1;
+      resetZoom();
       lightbox.classList.add("is-open");
     }
     function closeLightbox() {
       lightbox.classList.remove("is-open");
+      resetZoom();
     }
 
     viewport.addEventListener("click", openLightbox);
@@ -281,7 +307,62 @@
     lightbox.addEventListener("click", function (e) {
       if (e.target === lightbox) closeLightbox();
     });
-    bindSwipe(lightboxViewport, function () { render(current - 1); }, function () { render(current + 1); });
+
+    // 라이트박스 제스처: 두 손가락 핀치 줌, 확대 중 한 손가락 팬,
+    // 확대 안 된 상태에서는 한 손가락 스와이프로 사진 넘기기
+    var gestureMode = null;
+    var pinchStartDist = 0, pinchStartScale = 1;
+    var panStartX = 0, panStartY = 0, panOriginX = 0, panOriginY = 0;
+    var swipeStartX = 0, swipeStartY = 0;
+
+    lightboxViewport.addEventListener("touchstart", function (e) {
+      if (e.touches.length === 2) {
+        gestureMode = "pinch";
+        pinchStartDist = touchDistance(e.touches[0], e.touches[1]);
+        pinchStartScale = zoomScale;
+      } else if (e.touches.length === 1) {
+        if (zoomScale > 1) {
+          gestureMode = "pan";
+          panStartX = e.touches[0].clientX;
+          panStartY = e.touches[0].clientY;
+          panOriginX = zoomX;
+          panOriginY = zoomY;
+        } else {
+          gestureMode = "swipe";
+          swipeStartX = e.touches[0].clientX;
+          swipeStartY = e.touches[0].clientY;
+        }
+      }
+    }, { passive: true });
+
+    lightboxViewport.addEventListener("touchmove", function (e) {
+      if (gestureMode === "pinch" && e.touches.length === 2) {
+        e.preventDefault();
+        var dist = touchDistance(e.touches[0], e.touches[1]);
+        zoomScale = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, pinchStartScale * (dist / pinchStartDist)));
+        clampPan();
+        applyZoom();
+      } else if (gestureMode === "pan" && e.touches.length === 1) {
+        e.preventDefault();
+        zoomX = panOriginX + (e.touches[0].clientX - panStartX);
+        zoomY = panOriginY + (e.touches[0].clientY - panStartY);
+        clampPan();
+        applyZoom();
+      }
+    }, { passive: false });
+
+    lightboxViewport.addEventListener("touchend", function (e) {
+      if (gestureMode === "pinch") {
+        if (zoomScale <= 1.02) resetZoom();
+      } else if (gestureMode === "swipe") {
+        var dx = e.changedTouches[0].clientX - swipeStartX;
+        var dy = e.changedTouches[0].clientY - swipeStartY;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+          if (dx < 0) render(current + 1); else render(current - 1);
+        }
+      }
+      gestureMode = null;
+    }, { passive: true });
   }
 
   // ---------------------------------------------------------
