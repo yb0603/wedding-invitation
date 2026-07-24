@@ -931,3 +931,36 @@ h1,h2,h3,p{ margin:0; }
 @media (min-width: 540px){
   body{ padding: 40px 0; }
 }
+
+/* =========================================================
+   11. BACKGROUND MUSIC TOGGLE
+   ========================================================= */
+.bgm-toggle{
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 60;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(20,30,25,.42);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background .2s ease;
+}
+.bgm-toggle svg{
+  animation: bgm-spin 3.2s linear infinite;
+  animation-play-state: paused;
+}
+.bgm-toggle.is-playing svg{
+  animation-play-state: running;
+}
+@keyframes bgm-spin{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}

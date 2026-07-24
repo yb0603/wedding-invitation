@@ -49,7 +49,48 @@
     initKakaoMap();
     initTmapLink();
     initRsvpModal();
+    initBgm();
   });
+
+  // ---------------------------------------------------------
+  // 배경음악 (자동재생 실패 시 첫 터치/클릭에서 재생 시도)
+  // ---------------------------------------------------------
+  function initBgm() {
+    var audio = document.getElementById("bgm");
+    var toggle = document.getElementById("bgm-toggle");
+    if (!audio || !toggle) return;
+
+    var setPlaying = function (playing) {
+      toggle.classList.toggle("is-playing", playing);
+      toggle.setAttribute("aria-pressed", playing ? "true" : "false");
+    };
+
+    var tryAutoplay = function () {
+      var p = audio.play();
+      if (p && typeof p.then === "function") {
+        p.then(function () { setPlaying(true); }).catch(function () {
+          setPlaying(false);
+          document.addEventListener("touchstart", playOnce, { once: true, passive: true });
+          document.addEventListener("click", playOnce, { once: true });
+        });
+      }
+    };
+
+    var playOnce = function () {
+      audio.play().then(function () { setPlaying(true); }).catch(function () {});
+    };
+
+    toggle.addEventListener("click", function () {
+      if (audio.paused) {
+        audio.play().then(function () { setPlaying(true); }).catch(function () {});
+      } else {
+        audio.pause();
+        setPlaying(false);
+      }
+    });
+
+    tryAutoplay();
+  }
 
   // ---------------------------------------------------------
   // 스크롤 시 콘텐츠 페이드업 (제목/eyebrow 제외)
