@@ -23,20 +23,22 @@
   var VENUE_LNG = 126.9985;
 
   var GALLERY_IMAGES = [
-    "KakaoTalk_20260720_000742513.jpg", "KUHO9022.jpg",
-    "KakaoTalk_20260720_000742513_01.jpg", "KakaoTalk_20260720_004226111.jpg",
-    "KakaoTalk_20260720_000742513_07.jpg", "KUHO9710.jpg",
-    "KakaoTalk_20260720_000742513_03.jpg", "KakaoTalk_20260720_000742513_10.jpg",
-    "KakaoTalk_20260720_000742513_13.jpg", "DYL_0100.jpg",
-    "KakaoTalk_20260720_000742513_16.jpg", "KakaoTalk_20260720_000742513_05.jpg",
-    "KakaoTalk_20260720_000742513_08.jpg", "KakaoTalk_20260720_004226111_02.jpg",
-    "KakaoTalk_20260720_000742513_02.jpg", "KUHO9889.jpg",
-    "KakaoTalk_20260720_000742513_11.jpg", "KakaoTalk_20260720_000742513_09.jpg",
-    "KakaoTalk_20260720_000742513_14.jpg", "KakaoTalk_20260720_004226111_03.jpg",
-    "KakaoTalk_20260720_000742513_06.jpg", "KakaoTalk_20260720_000742513_17.jpg",
-    "KakaoTalk_20260720_000742513_12.jpg", "KakaoTalk_20260720_000742513_04.jpg",
-    "KakaoTalk_20260720_000742513_15.jpg", "KakaoTalk_20260720_004336091.jpg",
-    "KakaoTalk_20260720_000742513_18.jpg", "KakaoTalk_20260720_000742513_19.jpg"
+    "KakaoTalk_20260720_000742513.jpg", "KakaoTalk_20260720_000742513_01.jpg",
+    "KakaoTalk_20260720_000742513_06.jpg", "KakaoTalk_20260720_000742513_07.jpg",
+    "adding2.jpg", "KakaoTalk_20260720_000742513_03.jpg",
+    "KakaoTalk_20260720_000742513_09.jpg", "KakaoTalk_20260720_004226111.jpg",
+    "KakaoTalk_20260720_000742513_04.jpg", "KakaoTalk_20260720_000742513_10.jpg",
+    "adding3.jpg", "KakaoTalk_20260720_000742513_08.jpg",
+    "KakaoTalk_20260720_004226111_03.jpg", "adding6.jpg",
+    "KakaoTalk_20260720_000742513_11.jpg", "KakaoTalk_20260720_000742513_12.jpg",
+    "KUHO9889.jpg", "KakaoTalk_20260720_000742513_18.jpg",
+    "KakaoTalk_20260720_000742513_02.jpg", "KakaoTalk_20260720_000742513_13.jpg",
+    "KakaoTalk_20260720_000742513_16.jpg", "KakaoTalk_20260720_004336091.jpg",
+    "adding1.jpg", "KakaoTalk_20260720_000742513_14.jpg",
+    "KakaoTalk_20260720_000742513_17.jpg", "KakaoTalk_20260720_004226111_02.jpg",
+    "adding5.jpg", "KUHO9710.jpg",
+    "KakaoTalk_20260720_000742513_05.jpg", "kakao.jpg",
+    "KakaoTalk_20260720_000742513_19.jpg"
   ];
 
   document.addEventListener("DOMContentLoaded", function () {
