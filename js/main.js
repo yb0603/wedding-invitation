@@ -23,22 +23,10 @@
   var VENUE_LNG = 126.9985;
 
   var GALLERY_IMAGES = [
-    "KakaoTalk_20260720_000742513.jpg", "KakaoTalk_20260720_000742513_01.jpg",
-    "KakaoTalk_20260720_000742513_06.jpg", "KakaoTalk_20260720_000742513_07.jpg",
-    "adding2.jpg", "KakaoTalk_20260720_000742513_03.jpg",
-    "KakaoTalk_20260720_000742513_09.jpg", "KakaoTalk_20260720_004226111.jpg",
-    "KakaoTalk_20260720_000742513_04.jpg", "KakaoTalk_20260720_000742513_10.jpg",
-    "adding3.jpg", "KakaoTalk_20260720_000742513_08.jpg",
-    "KakaoTalk_20260720_004226111_03.jpg", "adding6.jpg",
-    "KakaoTalk_20260720_000742513_11.jpg", "KakaoTalk_20260720_000742513_12.jpg",
-    "KUHO9889.jpg", "KakaoTalk_20260720_000742513_18.jpg",
-    "KakaoTalk_20260720_000742513_02.jpg", "KakaoTalk_20260720_000742513_13.jpg",
-    "KakaoTalk_20260720_000742513_16.jpg", "KakaoTalk_20260720_004336091.jpg",
-    "adding1.jpg", "KakaoTalk_20260720_000742513_14.jpg",
-    "KakaoTalk_20260720_000742513_17.jpg", "KakaoTalk_20260720_004226111_02.jpg",
-    "adding5.jpg", "KUHO9710.jpg",
-    "KakaoTalk_20260720_000742513_05.jpg", "kakao.jpg",
-    "KakaoTalk_20260720_000742513_19.jpg"
+    "0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg",
+    "7.jpg", "8.jpg", "9.jpg", "10.jpg", "11.jpg", "12.jpg", "13.jpg",
+    "14.jpg", "15.jpg", "16.jpg", "17.jpg", "18.jpg", "19.jpg", "20.jpg",
+    "21.jpg", "22.jpg"
   ];
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -68,7 +56,7 @@
 
     document.documentElement.classList.add("intro-lock");
 
-    // 드로잉 애니메이션(하트 1.3s + 텍스트 delay 1.3s/duration 1.2s ≈ 2.5s)이
+    // 드로잉 애니메이션(하트 1.4s + Wedding/Invitation 텍스트가 순차로 그려져 ≈ 2.9s)이
     // 끝난 뒤 약 2초 대기했다가 로더를 걷어내고 커버 문구를 페이드업.
     window.setTimeout(function () {
       loader.classList.add("is-hidden");
@@ -77,7 +65,7 @@
       window.setTimeout(function () {
         if (loader.parentNode) loader.parentNode.removeChild(loader);
       }, 1000);
-    }, 4500);
+    }, 4900);
   }
 
   // ---------------------------------------------------------
