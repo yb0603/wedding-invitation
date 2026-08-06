@@ -42,6 +42,7 @@
   ];
 
   document.addEventListener("DOMContentLoaded", function () {
+    initIntroLoader();
     initReveal();
     initDday();
     initContactModal();
@@ -51,6 +52,33 @@
     initRsvpModal();
     initBgm();
   });
+
+  // ---------------------------------------------------------
+  // 인트로 로딩 화면 (하트 + 'Wedding Invitation' 필기체 드로잉 후
+  // 약 2초 뒤 커버 문구가 페이드업으로 노출)
+  // ---------------------------------------------------------
+  function initIntroLoader() {
+    var loader = document.getElementById("intro-loader");
+    var coverContent = document.getElementById("cover-content");
+
+    if (!loader) {
+      if (coverContent) coverContent.classList.add("is-visible");
+      return;
+    }
+
+    document.documentElement.classList.add("intro-lock");
+
+    // 드로잉 애니메이션(하트 1.3s + 텍스트 delay 1.3s/duration 1.2s ≈ 2.5s)이
+    // 끝난 뒤 약 2초 대기했다가 로더를 걷어내고 커버 문구를 페이드업.
+    window.setTimeout(function () {
+      loader.classList.add("is-hidden");
+      document.documentElement.classList.remove("intro-lock");
+      if (coverContent) coverContent.classList.add("is-visible");
+      window.setTimeout(function () {
+        if (loader.parentNode) loader.parentNode.removeChild(loader);
+      }, 1000);
+    }, 4500);
+  }
 
   // ---------------------------------------------------------
   // 배경음악 (자동재생 실패 시 첫 터치/클릭에서 재생 시도)

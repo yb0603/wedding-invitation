@@ -3,7 +3,7 @@
    화이트 톤 + 그린 계열 포인트, 세련되고 깔끔한 스타일
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Dancing+Script:wght@600;700&display=swap');
 
 :root{
   --paper: #ffffff;
@@ -110,6 +110,67 @@ h1,h2,h3,p{ margin:0; }
 }
 
 /* =========================================================
+   0. INTRO LOADER
+   ========================================================= */
+html.intro-lock,
+html.intro-lock body{
+  overflow: hidden;
+  height: 100%;
+}
+.intro-loader{
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background: rgba(8,10,8,.88);
+  transition: opacity 1s ease;
+}
+.intro-loader.is-hidden{
+  opacity: 0;
+  pointer-events: none;
+}
+.intro-loader__inner{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 16px;
+}
+.intro-loader__heart{
+  width: 60px;
+  height: auto;
+  overflow: visible;
+}
+.intro-loader__heart path{
+  fill:none;
+  stroke: #f4efe4;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: intro-heart-draw 1.3s ease forwards;
+}
+.intro-loader__text{
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: 2.1rem;
+  color: #f4efe4;
+  letter-spacing: .02em;
+  margin: 0;
+  clip-path: inset(0 100% 0 0);
+  animation: intro-text-draw 1.2s ease forwards;
+  animation-delay: 1.3s;
+}
+@keyframes intro-heart-draw{
+  to{ stroke-dashoffset: 0; }
+}
+@keyframes intro-text-draw{
+  to{ clip-path: inset(0 0% 0 0); }
+}
+
+/* =========================================================
    1. COVER
    ========================================================= */
 .cover{
@@ -138,6 +199,13 @@ h1,h2,h3,p{ margin:0; }
   position: relative;
   z-index: 2;
   padding: 0 24px;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.cover__content.is-visible{
+  opacity: 1;
+  transform: translateY(0);
 }
 .cover__kicker{
   font-weight: 500;
@@ -145,14 +213,6 @@ h1,h2,h3,p{ margin:0; }
   font-size: .7rem;
   opacity: .85;
   margin-bottom: 18px;
-}
-.cover__title{
-  font-family: "Noto Serif KR", serif;
-  font-weight: 600;
-  font-size: clamp(1.55rem, 6.8vw, 2.15rem);
-  line-height: 1.55;
-  margin-bottom: 22px;
-  text-shadow: 0 2px 18px rgba(0,0,0,.25);
 }
 .cover__names{
   font-size: 1.05rem;
