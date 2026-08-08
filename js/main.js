@@ -34,7 +34,7 @@
     initReveal();
     initDday();
     initContactModal();
-    initCarousel();
+    initGallery();
     initKakaoMap();
     initTmapLink();
     initRsvpModal();
@@ -243,14 +243,9 @@
   // ---------------------------------------------------------
   // 갤러리 캐러셀 (화살표 버튼 + 모바일 스와이프) + 확대 라이트박스
   // ---------------------------------------------------------
-  function initCarousel() {
-    var viewport = document.getElementById("carousel-viewport");
-    var img = document.getElementById("carousel-img");
-    var prevBtn = document.getElementById("carousel-prev");
-    var nextBtn = document.getElementById("carousel-next");
-    var indexEl = document.getElementById("carousel-index");
-    var totalEl = document.getElementById("carousel-total");
-    if (!viewport || !img) return;
+  function initGallery() {
+    var grid = document.getElementById("gallery-grid");
+    if (!grid) return;
 
     var lightbox = document.getElementById("gallery-lightbox");
     var lightboxImg = document.getElementById("lightbox-img");
@@ -263,8 +258,17 @@
 
     var total = GALLERY_IMAGES.length;
     var current = 0;
-    totalEl.textContent = total;
     if (lightboxTotalEl) lightboxTotalEl.textContent = total;
+
+    GALLERY_IMAGES.forEach(function (name, i) {
+      var thumb = document.createElement("img");
+      thumb.className = "gallery-grid__thumb";
+      thumb.src = "assets/img/" + name;
+      thumb.alt = "김유빈 박지인 웨딩 갤러리";
+      thumb.loading = "lazy";
+      thumb.addEventListener("click", function () { openLightbox(i); });
+      grid.appendChild(thumb);
+    });
 
     function preload(idx) {
       var i = (idx + total) % total;
@@ -275,21 +279,12 @@
     function render(idx, animate) {
       current = (idx + total) % total;
       var src = "assets/img/" + GALLERY_IMAGES[current];
-      indexEl.textContent = current + 1;
+      lightboxIndexEl.textContent = current + 1;
+      resetZoom();
 
       if (animate === false) {
-        img.src = src;
+        lightboxImg.src = src;
       } else {
-        img.classList.add("is-fading");
-        setTimeout(function () {
-          img.src = src;
-          img.classList.remove("is-fading");
-        }, 150);
-      }
-
-      if (lightboxImg && lightbox.classList.contains("is-open")) {
-        lightboxIndexEl.textContent = current + 1;
-        resetZoom();
         lightboxImg.classList.add("is-fading");
         setTimeout(function () {
           lightboxImg.src = src;
@@ -300,33 +295,6 @@
       preload(current + 1);
       preload(current - 1);
     }
-
-    render(0, false);
-    preload(1);
-    preload(-1);
-
-    prevBtn.addEventListener("click", function () { render(current - 1); });
-    nextBtn.addEventListener("click", function () { render(current + 1); });
-
-    function bindSwipe(el, onPrev, onNext) {
-      var startX = 0, startY = 0, tracking = false;
-      el.addEventListener("touchstart", function (e) {
-        startX = e.touches[0].clientX;
-        startY = e.touches[0].clientY;
-        tracking = true;
-      }, { passive: true });
-      el.addEventListener("touchend", function (e) {
-        if (!tracking) return;
-        tracking = false;
-        var dx = e.changedTouches[0].clientX - startX;
-        var dy = e.changedTouches[0].clientY - startY;
-        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
-          if (dx < 0) onNext(); else onPrev();
-        }
-      }, { passive: true });
-    }
-
-    bindSwipe(viewport, function () { render(current - 1); }, function () { render(current + 1); });
 
     // 확대 라이트박스
     if (!lightbox) return;
@@ -354,10 +322,8 @@
       return Math.sqrt(dx * dx + dy * dy);
     }
 
-    function openLightbox() {
-      lightboxImg.src = "assets/img/" + GALLERY_IMAGES[current];
-      lightboxIndexEl.textContent = current + 1;
-      resetZoom();
+    function openLightbox(idx) {
+      render(idx, false);
       lightbox.classList.add("is-open");
     }
     function closeLightbox() {
@@ -365,7 +331,6 @@
       resetZoom();
     }
 
-    viewport.addEventListener("click", openLightbox);
     lightboxClose.addEventListener("click", closeLightbox);
     lightboxPrev.addEventListener("click", function () { render(current - 1); });
     lightboxNext.addEventListener("click", function () { render(current + 1); });

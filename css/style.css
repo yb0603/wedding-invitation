@@ -160,14 +160,14 @@ html.intro-lock body{
   margin: 0;
   font-family: "Alex Brush", cursive;
   font-weight: 400;
-  font-size: clamp(3rem, 18vw, 5.2rem);
+  font-size: clamp(3.6rem, 21.6vw, 6.24rem);
   color: #f4efe4;
   white-space: nowrap;
   clip-path: inset(0 100% 0 0);
   text-shadow: 0 2px 22px rgba(0,0,0,.35);
 }
 .intro-loader__word--wedding{
-  transform: translate(-66%, -78%) rotate(-25deg);
+  transform: translate(-72%, -96%) rotate(-25deg);
   animation: intro-text-draw 1s ease forwards;
   animation-delay: 1.1s;
 }
@@ -673,53 +673,27 @@ html.intro-lock body{
 /* =========================================================
    6. GALLERY
    ========================================================= */
-.carousel{
-  position: relative;
-  width: 100%;
+.gallery-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
 }
-.carousel__viewport{
+.gallery-grid__thumb{
   width: 100%;
-  aspect-ratio: 2/3;
-  max-height: 64vh;
-  overflow: hidden;
-  border-radius: 10px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: 8px;
   background: var(--paper-deep);
   border: 1px solid var(--paper-line);
-  touch-action: pan-y;
-}
-.carousel__img{
-  width:100%; height:100%;
-  object-fit: cover;
-  transition: opacity .3s ease;
+  cursor: zoom-in;
   -webkit-user-drag: none;
   user-select: none;
+  transition: transform .2s ease, opacity .2s ease;
 }
-.carousel__img.is-fading{ opacity: 0; }
-.carousel__nav{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255,255,255,.9);
-  color: var(--ink);
-  font-size: 1.3rem;
-  line-height: 1;
-  display:flex; align-items:center; justify-content:center;
-  box-shadow: 0 4px 10px rgba(20,30,25,.15);
-  z-index: 2;
+.gallery-grid__thumb:active{
+  transform: scale(.96);
+  opacity: .85;
 }
-.carousel__nav--prev{ left: 10px; }
-.carousel__nav--next{ right: 10px; }
-.carousel__counter{
-  margin-top: 14px;
-  text-align:center;
-  font-size: .78rem;
-  letter-spacing: .08em;
-  color: var(--ink-faint);
-}
-.carousel__viewport{ cursor: zoom-in; }
 
 /* 갤러리 확대 라이트박스 */
 .lightbox{
