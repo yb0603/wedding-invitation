@@ -42,7 +42,7 @@
   });
 
   // ---------------------------------------------------------
-  // 인트로 로딩 화면 (하트 + 'Wedding Invitation' 필기체 드로잉 후
+  // 인트로 로딩 화면 ('Wedding Invitation' 필기체 드로잉 후
   // 약 2초 뒤 커버 문구가 페이드업으로 노출)
   // ---------------------------------------------------------
   function initIntroLoader() {
@@ -56,7 +56,7 @@
 
     document.documentElement.classList.add("intro-lock");
 
-    // 드로잉 애니메이션(하트 1.4s + Wedding/Invitation 텍스트가 순차로 그려져 ≈ 2.9s)이
+    // 드로잉 애니메이션(Wedding/Invitation 텍스트가 순차로 그려져 ≈ 2.2s)이
     // 끝난 뒤 약 2초 대기했다가 로더를 걷어내고 커버 문구를 페이드업.
     window.setTimeout(function () {
       loader.classList.add("is-hidden");
@@ -65,7 +65,7 @@
       window.setTimeout(function () {
         if (loader.parentNode) loader.parentNode.removeChild(loader);
       }, 1000);
-    }, 4900);
+    }, 4200);
   }
 
   // ---------------------------------------------------------
