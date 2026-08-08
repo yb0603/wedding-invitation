@@ -3,7 +3,7 @@
    화이트 톤 + 그린 계열 포인트, 세련되고 깔끔한 스타일
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Alex+Brush&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600;700&family=Tangerine:wght@400;700&display=swap');
 
 :root{
   --paper: #ffffff;
@@ -135,29 +135,30 @@ html.intro-lock body{
   position: relative;
   width: min(83.7vw, 509px);
   aspect-ratio: 100 / 88;
+  margin-top: -14vh;
 }
 .intro-loader__word{
   position: absolute;
   left: 50%;
   top: 50%;
   margin: 0;
-  font-family: "Palace Script MT", "Alex Brush", cursive;
-  font-weight: 400;
-  font-size: clamp(3.6rem, 21.6vw, 6.24rem);
+  font-family: "Palace Script MT", "Tangerine", cursive;
+  font-weight: 700;
+  font-size: clamp(5rem, 30vw, 8.6rem);
   color: #f4efe4;
   white-space: nowrap;
   clip-path: inset(0 100% 0 0);
   text-shadow: 0 2px 22px rgba(0,0,0,.35);
 }
 .intro-loader__word--wedding{
-  transform: translate(-50%, -78%) rotate(-25deg) scaleY(1.3);
-  animation: intro-text-draw 1.1s ease forwards;
+  transform: translate(-50%, -74%) rotate(-25deg) scaleY(1.3);
+  animation: intro-text-draw 1.9s ease forwards;
   animation-delay: .3s;
 }
 .intro-loader__word--invitation{
-  transform: translate(-50%, 22%) rotate(-25deg) scaleY(1.3);
-  animation: intro-text-draw 1.1s ease forwards;
-  animation-delay: 1.1s;
+  transform: translate(-50%, 18%) rotate(-25deg) scaleY(1.3);
+  animation: intro-text-draw 1.9s ease forwards;
+  animation-delay: 1.9s;
 }
 @keyframes intro-text-draw{
   to{ clip-path: inset(0 0% 0 0); }
