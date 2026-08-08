@@ -34,9 +34,9 @@
     initReveal();
     initDday();
     initContactModal();
+    initAccountModal();
     initGallery();
     initKakaoMap();
-    initTmapLink();
     initRsvpModal();
     initBgm();
   });
@@ -241,6 +241,77 @@
   }
 
   // ---------------------------------------------------------
+  // 계좌번호 모달: 복사 버튼 + 토스 앱 바로 송금 딥링크
+  // ---------------------------------------------------------
+  function initAccountModal() {
+    var openBtn = document.getElementById("open-account");
+    var closeBtn = document.getElementById("close-account");
+    var overlay = document.getElementById("account-modal");
+    if (!openBtn || !overlay) return;
+
+    openBtn.addEventListener("click", function () {
+      overlay.classList.add("is-open");
+    });
+    closeBtn.addEventListener("click", function () {
+      overlay.classList.remove("is-open");
+    });
+    overlay.addEventListener("click", function (e) {
+      if (e.target === overlay) overlay.classList.remove("is-open");
+    });
+
+    function fallbackCopy(text) {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    var copyBtns = overlay.querySelectorAll(".account-copy");
+    for (var i = 0; i < copyBtns.length; i++) {
+      copyBtns[i].addEventListener("click", function () {
+        var btn = this;
+        var num = btn.getAttribute("data-account");
+        var showCopied = function () {
+          var original = btn.textContent;
+          btn.textContent = "복사됨";
+          btn.classList.add("is-copied");
+          setTimeout(function () {
+            btn.textContent = original;
+            btn.classList.remove("is-copied");
+          }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(num).then(showCopied).catch(function () {
+            fallbackCopy(num);
+            showCopied();
+          });
+        } else {
+          fallbackCopy(num);
+          showCopied();
+        }
+      });
+    }
+
+    // 토스 앱 딥링크 (비공식 스킴이라 기기/앱 버전에 따라 동작하지 않을 수 있음 —
+    // 그럴 땐 위 복사 버튼으로 계좌번호를 복사해 붙여넣으면 된다)
+    var tossBtns = overlay.querySelectorAll(".account-toss");
+    for (var j = 0; j < tossBtns.length; j++) {
+      tossBtns[j].addEventListener("click", function () {
+        var bank = this.getAttribute("data-bank");
+        var account = this.getAttribute("data-account");
+        window.location.href =
+          "supertoss://send?bank=" + encodeURIComponent(bank) +
+          "&accountNo=" + encodeURIComponent(account) +
+          "&origin=qr";
+      });
+    }
+  }
+
+  // ---------------------------------------------------------
   // 갤러리 캐러셀 (화살표 버튼 + 모바일 스와이프) + 확대 라이트박스
   // ---------------------------------------------------------
   function initGallery() {
@@ -396,24 +467,6 @@
   }
 
   // ---------------------------------------------------------
-  // TMAP 길찾기 링크에 좌표를 반영 (초기엔 대략 좌표, 지오코딩 성공 시 정확한 좌표로 갱신)
-  // (tmap://search?name= 는 TMap이 지원하지 않는 액션이라 열리지 않음.
-  //  공식적으로 확인된 형식은 tmap://route?rGoName=&rGoX=&rGoY= 이다.)
-  // ---------------------------------------------------------
-  function updateTmapLink(lat, lng) {
-    var link = document.getElementById("tmap-link");
-    if (!link) return;
-    link.href =
-      "tmap://route?rGoName=" + encodeURIComponent(VENUE_QUERY) +
-      "&rGoX=" + lng +
-      "&rGoY=" + lat;
-  }
-
-  function initTmapLink() {
-    updateTmapLink(VENUE_LAT, VENUE_LNG);
-  }
-
-  // ---------------------------------------------------------
   // 카카오맵
   // VENUE_ADDRESS를 카카오 지오코더로 실시간 변환해서 정확한 좌표에 지도를 찍는다.
   // (좌표를 수동으로 하드코딩하면 부정확할 수 있어, 주소 → 좌표 변환을 직접 한다.)
@@ -443,7 +496,6 @@
             var lat = parseFloat(result[0].y);
             var lng = parseFloat(result[0].x);
             renderMap(lat, lng);
-            updateTmapLink(lat, lng); // TMap 링크도 정확한 좌표로 갱신
           } else {
             // 지오코딩 실패 시에만 대략 좌표로 대체
             renderMap(VENUE_LAT, VENUE_LNG);

@@ -293,9 +293,6 @@
         <a href="https://map.naver.com/p/search/성균관컨벤션웨딩홀" target="_blank" rel="noopener">
           <span class="ico" style="background:#03C75A;">N</span>네이버지도
         </a>
-        <a href="#" id="tmap-link">
-          <span class="ico" style="background:#1F2937;">T</span>TMAP
-        </a>
         <a href="https://www.google.com/maps/search/?api=1&query=성균관컨벤션웨딩홀+서울+종로구+성균관로+31" target="_blank" rel="noopener">
           <span class="ico" style="background:#4285F4;">G</span>구글맵
         </a>
@@ -328,22 +325,40 @@
         참석이 어려우신 분들을 위해 계좌번호를 안내드립니다.<br>
         전해주시는 진심 어린 마음, 소중히 간직하겠습니다.
       </p>
-      <div class="account-toggle">
-        <details class="account-group">
-          <summary>신랑측 계좌번호 보기</summary>
-          <div class="account-row">
-            <span>국민은행 938002-00-254832 (김유빈)</span>
-          </div>
-        </details>
-        <details class="account-group">
-          <summary>신부측 계좌번호 보기</summary>
-          <div class="account-row">
-            <span>농협은행 302-1855-2395-11 (박지인)</span>
-          </div>
-        </details>
-      </div>
+      <button class="btn btn--solid" id="open-account">마음 전하기</button>
     </div>
   </section>
+
+  <!-- 계좌번호 모달 -->
+  <div class="modal-overlay" id="account-modal">
+    <div class="modal">
+      <h3>마음 전하실 곳</h3>
+      <div class="contact-list">
+        <div class="account-item">
+          <div class="account-item__info">
+            <span class="account-item__who">신랑측 · 김유빈</span>
+            <span class="account-item__num">국민은행 938002-00-254832</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="account-copy" data-account="938002-00-254832">복사</button>
+            <button type="button" class="account-toss" data-bank="국민은행" data-account="938002-00-254832">토스</button>
+          </div>
+        </div>
+        <div class="account-item">
+          <div class="account-item__info">
+            <span class="account-item__who">신부측 · 박지인</span>
+            <span class="account-item__num">농협은행 302-1855-2395-11</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="account-copy" data-account="302-1855-2395-11">복사</button>
+            <button type="button" class="account-toss" data-bank="농협은행" data-account="302-1855-2395-11">토스</button>
+          </div>
+        </div>
+      </div>
+      <p class="account-modal__hint">계좌번호를 눌러 복사하거나, 토스 앱으로 바로 송금할 수 있어요.</p>
+      <button class="modal-close" id="close-account">닫기</button>
+    </div>
+  </div>
 
   <!-- ============ 9. RSVP ============ -->
   <section class="section section--tight">
