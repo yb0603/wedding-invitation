@@ -133,7 +133,7 @@ html.intro-lock body{
 }
 .intro-loader__stage{
   position: relative;
-  width: min(84.6vw, 515px);
+  width: min(93vw, 566px);
   aspect-ratio: 100 / 88;
 }
 .intro-loader__heart{
@@ -690,6 +690,12 @@ html.intro-lock body{
   user-select: none;
   transition: transform .2s ease, opacity .2s ease;
 }
+.gallery-grid__thumb.is-hidden{ display: none; }
+.gallery-more{
+  display: flex;
+  margin: 20px auto 0;
+}
+.gallery-more.is-hidden{ display: none; }
 .gallery-grid__thumb:active{
   transform: scale(.96);
   opacity: .85;

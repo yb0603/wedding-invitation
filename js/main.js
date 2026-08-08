@@ -318,6 +318,9 @@
     var grid = document.getElementById("gallery-grid");
     if (!grid) return;
 
+    var moreBtn = document.getElementById("gallery-more");
+    var INITIAL_COUNT = 4;
+
     var lightbox = document.getElementById("gallery-lightbox");
     var lightboxImg = document.getElementById("lightbox-img");
     var lightboxIndexEl = document.getElementById("lightbox-index");
@@ -334,12 +337,26 @@
     GALLERY_IMAGES.forEach(function (name, i) {
       var thumb = document.createElement("img");
       thumb.className = "gallery-grid__thumb";
+      if (i >= INITIAL_COUNT) thumb.classList.add("is-hidden");
       thumb.src = "assets/img/" + name;
       thumb.alt = "김유빈 박지인 웨딩 갤러리";
       thumb.loading = "lazy";
       thumb.addEventListener("click", function () { openLightbox(i); });
       grid.appendChild(thumb);
     });
+
+    if (moreBtn) {
+      if (total <= INITIAL_COUNT) {
+        moreBtn.classList.add("is-hidden");
+      } else {
+        moreBtn.addEventListener("click", function () {
+          grid.querySelectorAll(".gallery-grid__thumb.is-hidden").forEach(function (el) {
+            el.classList.remove("is-hidden");
+          });
+          moreBtn.classList.add("is-hidden");
+        });
+      }
+    }
 
     function preload(idx) {
       var i = (idx + total) % total;
