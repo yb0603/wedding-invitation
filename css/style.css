@@ -660,6 +660,9 @@ html.intro-lock body{
   object-fit: cover;
   display:block;
 }
+.timeline__media-grid--3col{
+  grid-template-columns: repeat(3, 1fr);
+}
 .timeline__caption{
   font-size: .88rem;
   color: var(--ink-soft);
