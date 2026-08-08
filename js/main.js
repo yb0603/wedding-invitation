@@ -42,8 +42,8 @@
   });
 
   // ---------------------------------------------------------
-  // 인트로 로딩 화면 ('Wedding Invitation' 필기체 드로잉 후
-  // 약 2초 뒤 커버 문구가 페이드업으로 노출)
+  // 인트로 로딩 화면: 어두운 화면에서 잠깐 머물다 서서히 밝아지며
+  // 커버 문구가 페이드업으로 노출된다.
   // ---------------------------------------------------------
   function initIntroLoader() {
     var loader = document.getElementById("intro-loader");
@@ -56,16 +56,14 @@
 
     document.documentElement.classList.add("intro-lock");
 
-    // 드로잉 애니메이션(Wedding/Invitation 텍스트가 손글씨처럼 천천히 순차로
-    // 그려져 약 3.8s)이 끝난 뒤 약 2초 대기했다가 로더를 걷어내고 커버 문구를 페이드업.
     window.setTimeout(function () {
       loader.classList.add("is-hidden");
       document.documentElement.classList.remove("intro-lock");
       if (coverContent) coverContent.classList.add("is-visible");
       window.setTimeout(function () {
         if (loader.parentNode) loader.parentNode.removeChild(loader);
-      }, 1000);
-    }, 5800);
+      }, 1800);
+    }, 900);
   }
 
   // ---------------------------------------------------------
