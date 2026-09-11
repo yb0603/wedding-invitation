@@ -448,13 +448,73 @@
     </div>
   </div>
 
-  <!-- ============ 10. RECEPTION ============ -->
+  <!-- ============ 10. 피로연 안내 ============ -->
   <section class="section section--tight">
-    <p class="eyebrow">RECEPTION</p>
-    <h2 class="section-title">피로연</h2>
+    <p class="eyebrow">RECEPTION DAY</p>
+    <h2 class="section-title">피로연 안내</h2>
+    <p class="section-sub">2026년 12월 26일 토요일 <span class="section-sub__strong">오전 11시 ~ 오후 5시</span></p>
+
     <div class="reveal">
-      <div class="notice-box">
-        피로연 관련 안내는 추후 업데이트될 예정입니다.
+      <div class="calendar-card">
+        <svg class="calendar-leaf-single" viewBox="0 0 100 100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 92 C22 85 8 58 12 34 C16 14 33 4 50 14 C67 4 84 14 88 34 C92 58 78 85 50 92 Z" fill="currentColor"/>
+        </svg>
+
+        <p class="calendar-month">2026 · December</p>
+        <div class="calendar-grid">
+          <span class="dow dow--sun">일</span><span class="dow">월</span><span class="dow">화</span><span class="dow">수</span><span class="dow">목</span><span class="dow">금</span><span class="dow">토</span>
+
+          <span class="day is-blank"></span><span class="day is-blank"></span>
+          <span class="day">1</span><span class="day">2</span><span class="day">3</span><span class="day">4</span><span class="day">5</span>
+
+          <span class="day is-sun">6</span><span class="day">7</span><span class="day">8</span><span class="day">9</span><span class="day">10</span><span class="day">11</span><span class="day">12</span>
+
+          <span class="day">13</span>
+          <span class="day">14</span><span class="day">15</span><span class="day">16</span><span class="day">17</span><span class="day">18</span><span class="day">19</span>
+
+          <span class="day is-sun">20</span><span class="day">21</span><span class="day">22</span><span class="day">23</span><span class="day">24</span><span class="day">25</span>
+          <span class="day is-the-day"><span class="stamp"></span><span>26</span></span>
+
+          <span class="day is-sun">27</span><span class="day">28</span><span class="day">29</span><span class="day">30</span><span class="day">31</span>
+          <span class="day is-blank"></span><span class="day is-blank"></span>
+        </div>
+      </div>
+
+      <div class="dday-card">
+        <div class="dday">
+          <span class="dday__label" id="reception-dday-label">D-DAY</span>
+          <div class="dday__units">
+            <span class="dday__unit"><span class="dday__num" id="reception-dday-days">0</span><small>일</small></span>
+            <span class="dday__sep">:</span>
+            <span class="dday__unit"><span class="dday__num" id="reception-dday-hours">00</span><small>시</small></span>
+            <span class="dday__sep">:</span>
+            <span class="dday__unit"><span class="dday__num" id="reception-dday-mins">00</span><small>분</small></span>
+            <span class="dday__sep">:</span>
+            <span class="dday__unit"><span class="dday__num" id="reception-dday-secs">00</span><small>초</small></span>
+          </div>
+        </div>
+
+        <div class="calendar-venue">
+          <b>호텔난타</b><br>제주 제주시 선돌목동길 56-26
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 11. 피로연 오시는 길 ============ -->
+  <section class="section section--tight">
+    <p class="eyebrow">RECEPTION LOCATION</p>
+    <h2 class="section-title">피로연 오시는 길</h2>
+
+    <div class="reveal">
+      <p class="venue-name">호텔난타</p>
+      <p class="venue-addr">제주 제주시 선돌목동길 56-26</p>
+
+      <div class="map-frame" id="reception-kakao-map">
+        <div class="map-fallback">
+          지도를 표시하려면 카카오맵 JavaScript 키가 필요합니다.<br>
+          <span style="color:var(--ink-soft);">js/main.js 상단의 KAKAO_MAP_APP_KEY를 설정해주세요.</span>
+        </div>
       </div>
     </div>
   </section>

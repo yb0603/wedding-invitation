@@ -22,6 +22,12 @@
   var VENUE_LAT = 37.5886;
   var VENUE_LNG = 126.9985;
 
+  var RECEPTION_DATETIME = new Date("2026-12-26T11:00:00+09:00");
+  var RECEPTION_VENUE_ADDRESS = "제주 제주시 선돌목동길 56-26";
+  // 지오코더 실패 시에만 쓰는 대략적인 제주시청 인근 폴백 좌표.
+  var RECEPTION_VENUE_LAT = 33.4996;
+  var RECEPTION_VENUE_LNG = 126.5312;
+
   var GALLERY_IMAGES = [
     "0.jpg", "1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg",
     "7.jpg", "8.jpg", "9.jpg", "10.jpg", "11.jpg", "12.jpg", "13.jpg",
@@ -32,7 +38,8 @@
   document.addEventListener("DOMContentLoaded", function () {
     initIntroLoader();
     initReveal();
-    initDday();
+    initDday("dday", WEDDING_DATETIME);
+    initDday("reception-dday", RECEPTION_DATETIME);
     initContactModal();
     initAccountModal();
     initGallery();
@@ -129,19 +136,19 @@
   // ---------------------------------------------------------
   // D-DAY 계산 + 카운트업 애니메이션 + 실시간 시:분:초
   // ---------------------------------------------------------
-  function initDday() {
-    var labelEl = document.getElementById("dday-label");
-    var daysEl = document.getElementById("dday-days");
-    var hoursEl = document.getElementById("dday-hours");
-    var minsEl = document.getElementById("dday-mins");
-    var secsEl = document.getElementById("dday-secs");
-    var wrap = document.querySelector(".dday-card");
+  function initDday(idPrefix, targetDatetime) {
+    var labelEl = document.getElementById(idPrefix + "-label");
+    var daysEl = document.getElementById(idPrefix + "-days");
+    var hoursEl = document.getElementById(idPrefix + "-hours");
+    var minsEl = document.getElementById(idPrefix + "-mins");
+    var secsEl = document.getElementById(idPrefix + "-secs");
+    var wrap = labelEl && labelEl.closest(".dday-card");
     if (!labelEl || !daysEl) return;
 
     function pad2(n) { return String(n).padStart(2, "0"); }
 
     function remaining() {
-      return WEDDING_DATETIME.getTime() - Date.now();
+      return targetDatetime.getTime() - Date.now();
     }
 
     function tick() {
@@ -483,42 +490,56 @@
 
   // ---------------------------------------------------------
   // 카카오맵
-  // VENUE_ADDRESS를 카카오 지오코더로 실시간 변환해서 정확한 좌표에 지도를 찍는다.
+  // 각 장소의 주소를 카카오 지오코더로 실시간 변환해서 정확한 좌표에 지도를 찍는다.
   // (좌표를 수동으로 하드코딩하면 부정확할 수 있어, 주소 → 좌표 변환을 직접 한다.)
+  // SDK 스크립트는 한 번만 로드하고, 여러 지도가 그 로드 완료를 함께 기다린다.
   // ---------------------------------------------------------
-  function initKakaoMap() {
-    var mapEl = document.getElementById("kakao-map");
+  var kakaoSdkReady = null;
+  function loadKakaoSdk() {
+    if (!kakaoSdkReady) {
+      kakaoSdkReady = new Promise(function (resolve) {
+        var script = document.createElement("script");
+        script.src =
+          "https://dapi.kakao.com/v2/maps/sdk.js?appkey=" +
+          KAKAO_MAP_APP_KEY +
+          "&autoload=false&libraries=services";
+        script.onload = function () { kakao.maps.load(resolve); };
+        document.head.appendChild(script);
+      });
+    }
+    return kakaoSdkReady;
+  }
+
+  function renderKakaoMap(mapElId, address, fallbackLat, fallbackLng) {
+    var mapEl = document.getElementById(mapElId);
     if (!mapEl || !KAKAO_MAP_APP_KEY) return; // 키 없으면 기본 안내문 유지
 
     mapEl.innerHTML = "";
-    var script = document.createElement("script");
-    script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=" +
-      KAKAO_MAP_APP_KEY +
-      "&autoload=false&libraries=services";
-    script.onload = function () {
-      kakao.maps.load(function () {
-        function renderMap(lat, lng) {
-          var center = new kakao.maps.LatLng(lat, lng);
-          var map = new kakao.maps.Map(mapEl, { center: center, level: 3 });
-          var marker = new kakao.maps.Marker({ position: center });
-          marker.setMap(map);
-        }
+    loadKakaoSdk().then(function () {
+      function renderMap(lat, lng) {
+        var center = new kakao.maps.LatLng(lat, lng);
+        var map = new kakao.maps.Map(mapEl, { center: center, level: 3 });
+        var marker = new kakao.maps.Marker({ position: center });
+        marker.setMap(map);
+      }
 
-        var geocoder = new kakao.maps.services.Geocoder();
-        geocoder.addressSearch(VENUE_ADDRESS, function (result, status) {
-          if (status === kakao.maps.services.Status.OK && result[0]) {
-            var lat = parseFloat(result[0].y);
-            var lng = parseFloat(result[0].x);
-            renderMap(lat, lng);
-          } else {
-            // 지오코딩 실패 시에만 대략 좌표로 대체
-            renderMap(VENUE_LAT, VENUE_LNG);
-          }
-        });
+      var geocoder = new kakao.maps.services.Geocoder();
+      geocoder.addressSearch(address, function (result, status) {
+        if (status === kakao.maps.services.Status.OK && result[0]) {
+          var lat = parseFloat(result[0].y);
+          var lng = parseFloat(result[0].x);
+          renderMap(lat, lng);
+        } else {
+          // 지오코딩 실패 시에만 대략 좌표로 대체
+          renderMap(fallbackLat, fallbackLng);
+        }
       });
-    };
-    document.head.appendChild(script);
+    });
+  }
+
+  function initKakaoMap() {
+    renderKakaoMap("kakao-map", VENUE_ADDRESS, VENUE_LAT, VENUE_LNG);
+    renderKakaoMap("reception-kakao-map", RECEPTION_VENUE_ADDRESS, RECEPTION_VENUE_LAT, RECEPTION_VENUE_LNG);
   }
 
   // ---------------------------------------------------------
