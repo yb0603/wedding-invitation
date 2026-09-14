@@ -850,8 +850,7 @@ html.intro-lock body{
   overflow-wrap: break-word;
 }
 .account-item .actions{ display:flex; gap: 8px; flex: none; }
-.account-copy,
-.account-toss{
+.account-copy{
   padding: 8px 12px;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -865,11 +864,6 @@ html.intro-lock body{
   background: var(--accent);
   border-color: var(--accent);
   color: var(--white);
-}
-.account-toss{
-  background: #1968f5;
-  border-color: #1968f5;
-  color: #fff;
 }
 .account-modal__hint{
   margin-top: 14px;

@@ -246,7 +246,7 @@
   }
 
   // ---------------------------------------------------------
-  // 계좌번호 모달: 복사 버튼 + 토스 앱 바로 송금 딥링크
+  // 계좌번호 모달: 복사 버튼
   // ---------------------------------------------------------
   function initAccountModal() {
     var openBtn = document.getElementById("open-account");
@@ -298,20 +298,6 @@
           fallbackCopy(num);
           showCopied();
         }
-      });
-    }
-
-    // 토스 앱 딥링크 (비공식 스킴이라 기기/앱 버전에 따라 동작하지 않을 수 있음 —
-    // 그럴 땐 위 복사 버튼으로 계좌번호를 복사해 붙여넣으면 된다)
-    var tossBtns = overlay.querySelectorAll(".account-toss");
-    for (var j = 0; j < tossBtns.length; j++) {
-      tossBtns[j].addEventListener("click", function () {
-        var bank = this.getAttribute("data-bank");
-        var account = this.getAttribute("data-account");
-        window.location.href =
-          "supertoss://send?bank=" + encodeURIComponent(bank) +
-          "&accountNo=" + encodeURIComponent(account) +
-          "&origin=qr";
       });
     }
   }
